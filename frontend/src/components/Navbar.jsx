@@ -1,29 +1,62 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const logout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
-    <nav className="bg-gray-800 text-white p-4 flex justify-between">
-      <div className="space-x-4">
-        <Link to="/">Home</Link>
-        <Link to="/meals">Meals</Link>
-        <Link to="/orders">Orders</Link>
-        <Link to="/waste">Waste Logs</Link>
+    <nav className="bg-gray-800/60 backdrop-blur-md text-white px-6 py-4 flex justify-between items-center shadow-md">
+      <div className="space-x-6 text-lg font-medium">
+        <Link to="/" className="hover:text-purple-400 transition duration-200">
+          Home
+        </Link>
+        <Link
+          to="/meals"
+          className="hover:text-purple-400 transition duration-200"
+        >
+          Meals
+        </Link>
+        <Link
+          to="/orders"
+          className="hover:text-purple-400 transition duration-200"
+        >
+          Orders
+        </Link>
+        <Link
+          to="/waste"
+          className="hover:text-purple-400 transition duration-200"
+        >
+          Waste Logs
+        </Link>
       </div>
-      <div className="space-x-4">
+
+      <div className="space-x-4 text-lg font-medium">
         {token ? (
-          <button onClick={logout}>Logout</button>
+          <button
+            onClick={logout}
+            className=" border-2 border-gray-600 rounded-md py-1 hover:border-gray-800 transition hover:bg-gray-700 text-white px-4 py-1 rounded transition duration-500 hover:cursor-pointer"
+          >
+            Logout
+          </button>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <Link
+              to="/login"
+              className="hover:text-purple-400 transition duration-200"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="hover:text-purple-400 transition duration-200"
+            >
+              Register
+            </Link>
           </>
         )}
       </div>

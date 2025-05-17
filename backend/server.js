@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRouts.js')
 const mealRoutes = require('./routes/mealRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const wasteRoutes = require('./routes/wasteRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 dotenv.config();
 connectDB();
@@ -18,7 +19,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/meals', mealRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/waste', wasteRoutes);
-
+app.use('/api/admin',adminRoutes);
 
 
 

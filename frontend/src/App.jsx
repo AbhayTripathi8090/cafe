@@ -6,12 +6,14 @@ import Meals from './pages/Meals';
 import Orders from './pages/Orders';
 import WasteLogs from './pages/WasteLogs';
 import Navbar from './components/Navbar';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminOnly from './components/AdminOnly';
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div className="p-4">
+      <div className="bg-purple-900/60 backdrop-blur-md min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -19,6 +21,15 @@ function App() {
           <Route path="/meals" element={<Meals />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/waste" element={<WasteLogs />} />
+          {/* ✅ Admin route */}
+          <Route
+            path="/admin"
+            element={
+              <AdminOnly>
+                <AdminDashboard />
+              </AdminOnly>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>

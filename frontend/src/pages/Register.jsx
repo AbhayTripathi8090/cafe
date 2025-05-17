@@ -3,18 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import API from '../services/api';
 
 const Register = () => {
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    isAdmin: false, // ✅ Added field
+  });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setForm(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await API.post('/auth/register', form);
+      await API.post('/auth/register', form); // ✅ Send isAdmin too
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -52,6 +61,19 @@ const Register = () => {
           className="w-full p-2 border rounded"
           required
         />
+
+        {/* ✅ Admin checkbox */}
+        <label className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            name="isAdmin"
+            checked={form.isAdmin}
+            onChange={handleChange}
+            className="h-4 w-4"
+          />
+          <span>Register as Admin</span>
+        </label>
+
         <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
           Register
         </button>

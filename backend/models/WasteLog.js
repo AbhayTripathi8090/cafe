@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const wasteLogSchema = new mongoose.Schema({
@@ -6,21 +7,21 @@ const wasteLogSchema = new mongoose.Schema({
     default: Date.now,
   },
   item: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Meal',
+    required: true
   },
   quantity: {
-    type: Number, // in grams or units
-    required: true,
+    type: Number,
+    required: true
   },
   reason: {
-    type: String,
-    enum: ['overproduction', 'spoilage', 'returned', 'leftover'],
-    required: true,
+    type: String
   },
   recordedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: true
   }
 }, { timestamps: true });
 

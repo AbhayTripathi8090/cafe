@@ -1,4 +1,4 @@
-const WasteLog = require('../models/WasteLog');
+const WasteLog = require("../models/WasteLog");
 
 // @desc Add waste log
 exports.addWasteLog = async (req, res) => {
@@ -20,7 +20,10 @@ exports.addWasteLog = async (req, res) => {
 // @desc Get all waste logs (admin)
 exports.getAllWasteLogs = async (req, res) => {
   try {
-    const logs = await WasteLog.find().populate('recordedBy', 'name email');
+    const logs = await WasteLog.find()
+      .populate("item", "name") // populate meal item
+      .populate("recordedBy", "name email"); // populate recordedBy user
+
     res.status(200).json(logs);
   } catch (err) {
     res.status(500).json({ message: err.message });

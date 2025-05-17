@@ -11,16 +11,32 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await API.post('/auth/login', form);
+  //     localStorage.setItem('token', res.data.token);
+  //     navigate('/meals');
+  //   } catch (err) {
+  //     setError(err.response?.data?.message || 'Login failed');
+  //   }
+  // };
   const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      const res = await API.post('/auth/login', form);
-      localStorage.setItem('token', res.data.token);
-      navigate('/meals');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
-    }
-  };
+  e.preventDefault();
+  try {
+    const res = await API.post('/auth/login', form);
+    localStorage.setItem('token', res.data.token);
+    
+    // ✅ Decode token to get isAdmin
+    const payload = JSON.parse(atob(res.data.token.split('.')[1]));
+    localStorage.setItem('isAdmin', payload.isAdmin); // <== Store admin status
+
+    navigate(payload.isAdmin ? '/admin' : '/meals'); // redirect based on role
+  } catch (err) {
+    setError(err.response?.data?.message || 'Login failed');
+  }
+};
+
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
